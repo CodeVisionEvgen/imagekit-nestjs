@@ -11,3 +11,137 @@ First, install the package via npm:
 ```sh
 npm install imagekit-nestjs
 ```
+
+# Configuration
+
+You can configure the ImageKitModule asynchronously to load your ImageKit credentials.
+Example with NestJS Config Module
+
+First, install the necessary packages:
+
+```sh
+npm install @nestjs/config
+```
+
+Then, create a configuration file (e.g., config/imagekit.config.ts):
+
+```ts
+export default () => ({
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+});
+```
+
+Update your AppModule to import the ImageKitModule with the configuration:
+
+```ts
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ImageKitModule } from "imagekit-nestjs";
+import imageKitConfig from "./config/imagekit.config";
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      load: [imageKitConfig],
+      isGlobal: true,
+    }),
+    ImageKitModule.forRootAsync({
+      useFactory: () => imageKitConfig(ConfigService),
+      inject: [ConfigService],
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+# Usage
+
+You can now inject the ImageKitService into your controllers or services and use its methods.
+Example Controller
+
+```ts
+import { Controller, Get } from "@nestjs/common";
+import { ImageKitService } from "imagekit-nestjs";
+
+@Controller("images")
+export class ImagesController {
+  constructor(private readonly imageKitService: ImageKitService) {}
+
+  @Get("upload")
+  async uploadImage() {
+    const result = await this.imageKitService.upload({
+      file: "your_file_path",
+      fileName: "example.jpg",
+    });
+    return result;
+  }
+}
+```
+
+# Example Service
+
+```ts
+import { Injectable } from "@nestjs/common";
+import { ImageKitService } from "imagekit-nestjs";
+
+@Injectable()
+export class ImagesService {
+  constructor(private readonly imageKitService: ImageKitService) {}
+
+  async uploadImage(filePath: string, fileName: string) {
+    const result = await this.imageKitService.upload({
+      file: filePath,
+      fileName: fileName,
+    });
+    return result;
+  }
+}
+```
+
+#Using ImageKit Methods
+
+The ImageKitService extends the official ImageKit library, so you can use all methods provided by the ImageKit library. Here are some examples:
+Upload an Image
+
+```ts
+const uploadResponse = await this.imageKitService.upload({
+  file: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA...",
+  fileName: "example.png",
+});
+console.log(uploadResponse);
+```
+
+# Get File Details
+
+```ts
+const fileDetails = await this.imageKitService.getFileDetails("fileId");
+console.log(fileDetails);
+```
+
+# List Files
+
+```ts
+const fileList = await this.imageKitService.listFiles({
+  skip: 0,
+  limit: 10,
+});
+console.log(fileList);
+```
+
+# Delete a File
+
+```ts
+const deleteResponse = await this.imageKitService.deleteFile("fileId");
+console.log(deleteResponse);
+```
+
+Refer to the official ImageKit documentation for more details on available methods.
+API
+ImageKitService
+
+The ImageKitService extends the official ImageKit library, so all methods from the ImageKit library are available. Refer to the official ImageKit documentation for more details.
+Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any bugs or feature requests.
