@@ -1,11 +1,12 @@
 {
   "name": "imagekit-nestjs",
-  "version": "1.0.0",
-  "main": "./src/index.ts",
+  "version": "1.0.5",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "tsc ./src"
   },
   "author": "CodeVisionEvgen",
+  "types": "dist/index.d.ts",
   "license": "ISC",
   "description": "Imagekit nestjs module",
   "dependencies": {
