@@ -1,0 +1,26 @@
+{
+  "name": "imagekit-nestjs",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "tsc ./src"
+  },
+  "author": "CodeVisionEvgen",
+  "license": "ISC",
+  "description": "Imagekit nestjs module",
+  "dependencies": {
+    "@nestjs/common": "^10.3.10",
+    "imagekit": "^5.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeVisionEvgen/imagekit-nestjs"
+  },
+  "keywords": [
+    "nestjs",
+    "module"
+  ],
+  "devDependencies": {
+    "typescript": "^4.0.0"
+  }
+}
