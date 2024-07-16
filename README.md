@@ -44,7 +44,6 @@ import imageKitConfig from "./config/imagekit.config";
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [imageKitConfig],
       isGlobal: true,
     }),
     ImageKitModule.forRootAsync({
