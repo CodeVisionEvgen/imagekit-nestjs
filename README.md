@@ -100,7 +100,7 @@ export class ImagesService {
 }
 ```
 
-#Using ImageKit Methods
+# Using ImageKit Methods
 
 The ImageKitService extends the official ImageKit library, so you can use all methods provided by the ImageKit library. Here are some examples:
 Upload an Image
