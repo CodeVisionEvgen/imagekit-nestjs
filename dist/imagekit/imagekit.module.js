@@ -22,15 +22,19 @@ let ImageKitModule = ImageKitModule_1 = class ImageKitModule {
             useFactory: (opts) => new imagekit_service_1.ImageKitService(opts.publicKey, opts.privateKey, opts.urlEndpoint),
             inject: ["IMAGEKIT_MODULE_OPTIONS"],
         };
-        return {
+        const dynamicModule = {
             module: ImageKitModule_1,
             providers: [asyncOptionsProvider, imageKitServiceProvider],
             exports: [imagekit_service_1.ImageKitService],
         };
+        if (options.isGlobal) {
+            dynamicModule.global = true;
+        }
+        return dynamicModule;
     }
 };
-exports.ImageKitModule = ImageKitModule;
-exports.ImageKitModule = ImageKitModule = ImageKitModule_1 = __decorate([
+ImageKitModule = ImageKitModule_1 = __decorate([
     (0, common_1.Module)({})
 ], ImageKitModule);
+exports.ImageKitModule = ImageKitModule;
 //# sourceMappingURL=imagekit.module.js.map

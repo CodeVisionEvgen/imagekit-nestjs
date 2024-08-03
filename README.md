@@ -49,6 +49,7 @@ import imageKitConfig from "./config/imagekit.config";
     ImageKitModule.forRootAsync({
       useFactory: () => imageKitConfig(ConfigService),
       inject: [ConfigService],
+      isGlobal: true, // is optional
     }),
   ],
 })
