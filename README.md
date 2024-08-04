@@ -23,13 +23,18 @@ First, install the necessary packages:
 npm install @nestjs/config
 ```
 
-Then, create a configuration file (e.g., config/imagekit.config.ts):
+Then, create a configuration file (e.g., configs/imagekit.config.ts):
 
 ```ts
-export default () => ({
-  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+import { ConfigService } from "@nestjs/config";
+import { ImageKitModuleOptions } from "imagekit-nestjs";
+
+export const ImageKitConfig = (
+  configService: ConfigService
+): ImageKitModuleOptions => ({
+  privateKey: configService.get("IMAGEKIT_PRIVATEKEY"),
+  publicKey: configService.get("IMAGEKIT_PUBLICKEY"),
+  urlEndpoint: configService.get("IMAGEKIT_URLENDPOINT"),
 });
 ```
 
@@ -39,15 +44,12 @@ Update your AppModule to import the ImageKitModule with the configuration:
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ImageKitModule } from "imagekit-nestjs";
-import imageKitConfig from "./config/imagekit.config";
+import { ImageKitConfig } from "configs/imagekit.conf";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
     ImageKitModule.forRootAsync({
-      useFactory: () => imageKitConfig(ConfigService),
+      useFactory: ImageKitConfig,
       inject: [ConfigService],
       isGlobal: true, // is optional
     }),
