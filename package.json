@@ -1,6 +1,6 @@
 {
   "name": "imagekit-nestjs",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc"
@@ -16,6 +16,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CodeVisionEvgen/imagekit-nestjs"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "nestjs",
