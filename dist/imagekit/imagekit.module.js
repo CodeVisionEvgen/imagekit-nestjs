@@ -11,6 +11,22 @@ exports.ImageKitModule = void 0;
 const common_1 = require("@nestjs/common");
 const imagekit_service_1 = require("./imagekit.service");
 let ImageKitModule = ImageKitModule_1 = class ImageKitModule {
+    static forRoot(options) {
+        const module = {
+            module: ImageKitModule_1,
+            providers: [
+                {
+                    provide: imagekit_service_1.ImageKitService,
+                    useFactory: () => new imagekit_service_1.ImageKitService(options.publicKey, options.privateKey, options.urlEndpoint),
+                },
+            ],
+            exports: [imagekit_service_1.ImageKitService],
+        };
+        if (options.isGlobal) {
+            module.global = true;
+        }
+        return module;
+    }
     static forRootAsync(options) {
         const asyncOptionsProvider = {
             provide: "IMAGEKIT_MODULE_OPTIONS",
@@ -26,6 +42,7 @@ let ImageKitModule = ImageKitModule_1 = class ImageKitModule {
             module: ImageKitModule_1,
             providers: [asyncOptionsProvider, imageKitServiceProvider],
             exports: [imagekit_service_1.ImageKitService],
+            imports: options.imports || [],
         };
         if (options.isGlobal) {
             dynamicModule.global = true;
@@ -33,8 +50,8 @@ let ImageKitModule = ImageKitModule_1 = class ImageKitModule {
         return dynamicModule;
     }
 };
-ImageKitModule = ImageKitModule_1 = __decorate([
+exports.ImageKitModule = ImageKitModule;
+exports.ImageKitModule = ImageKitModule = ImageKitModule_1 = __decorate([
     (0, common_1.Module)({})
 ], ImageKitModule);
-exports.ImageKitModule = ImageKitModule;
 //# sourceMappingURL=imagekit.module.js.map

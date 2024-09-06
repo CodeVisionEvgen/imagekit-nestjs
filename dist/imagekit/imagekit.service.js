@@ -21,9 +21,9 @@ let ImageKitService = class ImageKitService extends ImageKit {
         });
     }
 };
-ImageKitService = __decorate([
+exports.ImageKitService = ImageKitService;
+exports.ImageKitService = ImageKitService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [String, String, String])
 ], ImageKitService);
-exports.ImageKitService = ImageKitService;
 //# sourceMappingURL=imagekit.service.js.map
