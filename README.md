@@ -32,9 +32,9 @@ import { ImageKitModuleOptions } from "imagekit-nestjs";
 export const ImageKitConfig = (
   configService: ConfigService
 ): ImageKitModuleOptions => ({
-  privateKey: configService.get("IMAGEKIT_PRIVATEKEY"),
-  publicKey: configService.get("IMAGEKIT_PUBLICKEY"),
-  urlEndpoint: configService.get("IMAGEKIT_URLENDPOINT"),
+  privateKey: configService.get("IMAGEKIT_PRIVATE_KEY"),
+  publicKey: configService.get("IMAGEKIT_PUBLIC_KEY"),
+  urlEndpoint: configService.get("IMAGEKIT_URL_ENDPOINT"),
 });
 ```
 
@@ -51,6 +51,7 @@ import { ImageKitConfig } from "configs/imagekit.conf";
     ImageKitModule.forRootAsync({
       useFactory: ImageKitConfig,
       inject: [ConfigService],
+      imports: [ConfigModule],
       isGlobal: true, // is optional
     }),
   ],
